@@ -1,26 +1,31 @@
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 function Login() {
   return (
-    <section className="login-page">
+    <>
+      <Navbar />
 
-      <div className="login-card">
+      <section className="login-page">
+        <div className="login-card">
+          <p className="section-tag">WELCOME BACK</p>
 
-        <p className="section-tag">WELCOME BACK</p>
+          <h1>Sign In</h1>
 
-        <h1>Sign In</h1>
+          <input type="email" placeholder="Email Address" />
 
-        <input type="email" placeholder="Email Address" />
+          <input type="password" placeholder="Password" />
 
-        <input type="password" placeholder="Password" />
+          <button>Login</button>
 
-        <button>Login</button>
+          <p className="login-text">
+            New here? Create an account
+          </p>
+        </div>
+      </section>
 
-        <p className="login-text">
-          New here? Create an account
-        </p>
-
-      </div>
-
-    </section>
+      <Footer />
+    </>
   );
 }
 

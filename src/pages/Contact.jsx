@@ -1,61 +1,64 @@
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 function Contact() {
   return (
-<section className="contact-page">
+    <>
+      <Navbar />
 
-  <div className="contact-left">
+      <section className="contact-page">
+        <div className="contact-left">
+          <p className="section-tag">GET IN TOUCH</p>
 
-    <p className="section-tag">GET IN TOUCH</p>
+          <h1>Let's Plan Your Next Escape</h1>
 
-    <h1>Let's Plan Your Next Escape</h1>
+          <p>
+            Have questions, recommendations or a dream destination in mind?
+            We'd love to hear from you.
+          </p>
 
-    <p>
-      Have questions, recommendations or a dream destination in mind?
-      We'd love to hear from you.
-    </p>
+          <div className="contact-details">
+            <p>📍 Dehradun, India</p>
+            <p>✉ hello@raahistay.com</p>
+            <p>☎ +91 98765 43210</p>
+            <p>📸 @raahistay</p>
+          </div>
+        </div>
 
-    <div className="contact-details">
-      <p>📍 Dehradun, India</p>
-      <p>✉ hello@raahistay.com</p>
-      <p>☎ +91 98765 43210</p>
-      <p>📸 @raahistay</p>
-    </div>
+        <div className="contact-card">
+          <input type="text" placeholder="Your Name" />
 
-  </div>
+          <input type="email" placeholder="Email Address" />
 
-  <div className="contact-card">
+          <textarea
+            placeholder="Write your message here..."
+            rows="5"
+          ></textarea>
 
-    <input type="text" placeholder="Your Name" />
+          <button>Send Message</button>
+        </div>
+      </section>
 
-    <input type="email" placeholder="Email Address" />
+      <div className="contact-info">
+        <div className="info-item">
+          🌿 Instagram
+          <span>@raahistay</span>
+        </div>
 
-    <textarea
-      placeholder="Write your message here..."
-      rows="5"
-    ></textarea>
+        <div className="info-item">
+          ✉️ Email
+          <span>hello@raahistay.com</span>
+        </div>
 
-    <button>Send Message</button>
+        <div className="info-item">
+          ☎ WhatsApp
+          <span>+91 98765 43210</span>
+        </div>
+      </div>
 
-  </div>
-
-</section>
+      <Footer />
+    </>
   );
 }
-<div className="contact-info">
 
-  <div className="info-item">
-    🌿 Instagram
-    <span>@raahistay</span>
-  </div>
-
-  <div className="info-item">
-    ✉️ Email
-    <span>hello@raahistay.com</span>
-  </div>
-
-  <div className="info-item">
-    ☎ WhatsApp
-    <span>+91 98765 43210</span>
-  </div>
-
-</div>
 export default Contact;

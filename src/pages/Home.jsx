@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import mountain from "../assets/mountain.jpg";
 import forest from "../assets/forest.jpg";
 import river from "../assets/river.jpg";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import Card from "../components/Card";
+import Footer from "../components/Footer";
+<Link to="/dashboard">DASHBOARD</Link>
 function Home() {
   return (
+    
     <div>
             <nav>
         <h1>RaahiStay</h1>
@@ -177,5 +183,21 @@ function Home() {
           </div>
         );
       }
-      
+      <>
+  <Navbar />
+
+  <Hero />
+
+  <Card
+    title="Mountain Cabin"
+    description="A peaceful mountain retreat."
+  />
+
+  <Card
+    title="River Cottage"
+    description="A cozy riverside stay."
+  />
+
+  <Footer />
+</>
       export default Home;
