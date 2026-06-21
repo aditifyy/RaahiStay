@@ -1,0 +1,13 @@
+.modal-card{
+  background:white;
+  padding:30px;
+  border-radius:24px;
+  max-width:400px;
+  margin:auto;
+  box-shadow:0 15px 40px rgba(0,0,0,.1);
+}
+
+.modal-card h3{
+  color:#6d5147;
+  margin-bottom:10px;
+}
