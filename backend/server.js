@@ -1,5 +1,5 @@
-const errorHandler = require("./middleware/errorHandler");
 const express = require("express");
+const Stay = require("./models/Stay");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -9,98 +9,120 @@ app.use(cors());
 app.use(express.json());
 
 // Home Route
-app.get("/", (req, res) => {
-  res.json({
-    message: "RaahiStay Backend Running 🚀",
-  });
-});
-
-// Sample Data
-let stays = [
-  {
-    id: 1,
-    name: "Mountain Cabin",
-    location: "Manali",
-    price: 2500,
-  },
-  {
-    id: 2,
-    name: "Forest Cottage",
-    location: "Mussoorie",
-    price: 3000,
-  },
-];
-
-// GET ALL
-app.get("/api/stays", (req, res) => {
-  res.json(stays);
+app.get("/api/stays", async (req, res) => {
+  try {
+    const stays = await Stay.find();
+    res.json(stays);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // GET ONE
-app.get("/api/stays/:id", (req, res) => {
-  const stay = stays.find((s) => s.id == req.params.id);
+app.get("/api/stays/:id", async (req, res) => {
+  try {
+    const stay = await Stay.findById(req.params.id);
 
-  if (!stay) {
-    return res.status(404).json({
-      message: "Stay not found",
+    if (!stay) {
+      return res.status(404).json({
+        message: "Stay not found",
+      });
+    }
+
+    res.json(stay);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
     });
   }
-
-  res.json(stay);
 });
 
 // POST
-app.post("/api/stays", (req, res) => {
-  const newStay = {
-    id: stays.length + 1,
-    ...req.body,
-  };
+app.post("/api/stays", async (req, res) => {
+  try {
+    const stay = await Stay.create(req.body);
 
-  stays.push(newStay);
-
-  res.status(201).json(newStay);
-});
-
-// PUT
-app.put("/api/stays/:id", (req, res) => {
-  const index = stays.findIndex((s) => s.id == req.params.id);
-
-  if (index === -1) {
-    return res.status(404).json({
-      message: "Stay not found",
+    res.status(201).json(stay);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
     });
   }
+});
+// PUT
+app.put("/api/stays/:id", async (req, res) => {
+  try {
+    const stay = await Stay.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
 
-  stays[index] = {
-    ...stays[index],
-    ...req.body,
-  };
+    if (!stay) {
+      return res.status(404).json({
+        message: "Stay not found",
+      });
+    }
 
-  res.json(stays[index]);
+    res.json(stay);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 });
 
 // DELETE
-app.delete("/api/stays/:id", (req, res) => {
-  stays = stays.filter((s) => s.id != req.params.id);
+app.delete("/api/stays/:id", async (req, res) => {
+  try {
+    const stay = await Stay.findByIdAndDelete(req.params.id);
 
-  res.json({
-    message: "Stay deleted successfully",
-  });
+    if (!stay) {
+      return res.status(404).json({
+        message: "Stay not found",
+      });
+    }
+
+    res.json({
+      message: "Stay deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 });
-
 // SEARCH
-app.get("/api/search", (req, res) => {
-  const q = req.query.location?.toLowerCase() || "";
+app.get("/api/search", async (req, res) => {
+  try {
+    const q = req.query.location || "";
 
-  const result = stays.filter((s) =>
-    s.location.toLowerCase().includes(q)
-  );
+    const result = await Stay.find({
+      location: {
+        $regex: q,
+        $options: "i",
+      },
+    });
 
-  res.json(result);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 });
-
 const PORT = process.env.PORT || 3001;
-app.use(errorHandler);
+
+console.log("Before listen");
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+console.log("After listen");
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch((err) => console.log(err));
