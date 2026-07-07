@@ -10,14 +10,20 @@ A simple REST API built using Node.js and Express.js for the RaahiStay project.
 - Update an existing stay
 - Delete a stay
 - Search stays by location
-- JSON responses
-- Proper HTTP status codes
-- Environment variable support
+- MongoDB Atlas Integration
+- Mongoose ODM
+- CRUD Operations
+- Search by Location
+- Environment Variable Support
+- Proper HTTP Status Codes
+- MongoDB Atlas
+- Mongoose
 
 ## Tech Stack
-
-- Node.js
+ - Node.js
 - Express.js
+- MongoDB Atlas
+- Mongoose
 - CORS
 - Dotenv
 - Nodemon
@@ -61,7 +67,30 @@ http://localhost:3001
 ```
 
 ---
+## Set Up the Database
 
+1. Create a `.env` file inside the backend folder.
+
+2. Add the following environment variables:
+
+```env
+PORT=3001
+MONGO_URI=your_mongodb_connection_string
+```
+
+3. Replace `your_mongodb_connection_string` with your MongoDB Atlas connection string.
+
+4. Start the server:
+
+```bash
+npm run dev
+```
+
+If the connection is successful, the terminal will display:
+
+```
+MongoDB Connected ✅
+```
 # API Endpoints
 
 ## Get All Stays
@@ -185,7 +214,18 @@ Response:
 | 404 | Not Found |
 
 ---
+## Database
 
+This project uses MongoDB Atlas as the cloud database.
+
+Mongoose is used as the ODM (Object Data Modeling) library.
+
+All homestay data is stored in MongoDB.
+## Schema Diagram
+
+The project contains one MongoDB collection named **Stay**.
+
+![Schema Diagram](schema-diagram.png)
 ## Author
 
-Developed as part of the AI-Assisted Full Stack Web Development Internship.
+Developed by Aditi as part of the AI-Assisted Full Stack Web Development Internship.

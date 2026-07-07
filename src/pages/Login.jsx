@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function Login() {
+function Login({ darkMode, setDarkMode }) {
   return (
     <>
-      <Navbar />
-
+<Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
       <section className="login-page">
         <div className="login-card">
           <p className="section-tag">WELCOME BACK</p>

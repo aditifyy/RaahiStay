@@ -6,8 +6,8 @@ import {
   Toast,
   Modal,
 } from "../components/ui";
+function UIShowcase({ darkMode, setDarkMode }) {
 
-function UIShowcase() {
   return (
    <div className="ui-demo">
   <div className="demo-container">

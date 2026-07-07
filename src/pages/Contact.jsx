@@ -1,10 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function Contact() {
+function Contact({ darkMode, setDarkMode }) {
   return (
     <>
-      <Navbar />
+      <Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
       <section className="contact-page">
         <div className="contact-left">

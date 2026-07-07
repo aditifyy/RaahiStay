@@ -1,13 +1,41 @@
 import "./Dashboard.css";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Dashboard.css";
-import { useState } from "react";
-function Dashboard() {
-  const [darkMode, setDarkMode] = useState(false);
+import { useState, useEffect } from "react";
+function Dashboard({
+  darkMode,
+  setDarkMode
+}) {
+  
+  const [favorites, setFavorites] = useState([]);
+const [stays, setStays] = useState([]);
+const [bookings, setBookings] = useState([]);
+useEffect(() => {
+  const saved = JSON.parse(localStorage.getItem("favorites")) || [];
+  setFavorites(saved);
+const savedBookings =
+  JSON.parse(localStorage.getItem("bookings")) || [];
+
+setBookings(savedBookings);
+  fetch("http://localhost:3001/api/stays")
+    .then((res) => res.json())
+    .then((data) => setStays(data))
+    .catch((err) => console.log(err));
+
+}, []);
+console.log("Favorites:", favorites);
+console.log("Stays:", stays);
+const wishlist = stays.filter((stay) =>
+  favorites.includes(stay._id)
+);
   return (
     <>
-      <Navbar />
+     <Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
       <section
   className={`dashboard-page ${
@@ -33,55 +61,75 @@ function Dashboard() {
             Discover places that feel like home.
           </p>
 
-          <button className="explore-btn">
-            ↗ Explore Stays
-          </button>
+          <Link to="/stays" className="book-link">
+  <button className="explore-btn">
+    ↗ Explore Stays
+  </button>
+</Link>
         </div>
 
         <div className="stats-section">
           <div className="stat-card">
             <span>◇</span>
             <h3>Saved Places</h3>
-            <p>24</p>
+           <p>{favorites.length}</p>
           </div>
+<Link to="/bookings" className="stat-link">
 
-          <div className="stat-card">
-            <span>✦</span>
-            <h3>Bookings</h3>
-            <p>08</p>
-          </div>
+  <div className="stat-card">
 
-          <div className="stat-card">
-            <span>◈</span>
-            <h3>Wishlist</h3>
-            <p>12</p>
-          </div>
+    <span>✦</span>
+
+    <h3>Bookings</h3>
+
+    <p>{bookings.length}</p>
+
+  </div>
+
+</Link>
+
+          <Link to="/wishlist" className="stat-link">
+
+  <div className="stat-card">
+    <span>◈</span>
+
+    <h3>Wishlist</h3>
+
+    <p>{favorites.length}</p>
+  </div>
+
+</Link>
         </div>
 
         <h2 className="section-title">
-          ✦ Featured Escapes
-        </h2>
+  ❤️ My Wishlist
+</h2>
 
-        <div className="escapes-grid">
-          <div className="escape-card tall">
-            <h3>MANALI</h3>
-            <p>Mountain Retreat</p>
-            <span>4.9 Rating</span>
-          </div>
+<div className="escapes-grid">
 
-          <div className="escape-card medium">
-            <h3>GOA</h3>
-            <p>Ocean Escape</p>
-            <span>4.8 Rating</span>
-          </div>
+  {wishlist.length === 0 ? (
 
-          <div className="escape-card short">
-            <h3>UDAIPUR</h3>
-            <p>Lakeside Haven</p>
-            <span>5.0 Rating</span>
-          </div>
-        </div>
+    <p>No favourite stays yet ❤️</p>
 
+  ) : (
+
+    wishlist.map((stay) => (
+
+      <div className="escape-card medium" key={stay._id}>
+
+        <h3>{stay.name}</h3>
+
+        <p>📍 {stay.location}</p>
+
+        <span>⭐ {stay.rating}</span>
+
+      </div>
+
+    ))
+
+  )}
+
+</div>
         <h2 className="section-title">
           ✦ Travel Inspirations
         </h2>

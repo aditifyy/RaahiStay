@@ -1,10 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function About() {
+function About({ darkMode, setDarkMode }) {
   return (
     <>
-      <Navbar />
+      <Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
       <section className="about-page">
         <div className="about-image">

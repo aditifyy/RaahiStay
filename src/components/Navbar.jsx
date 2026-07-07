@@ -1,7 +1,10 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({
+darkMode,
+setDarkMode
+}){
   return (
     <nav className="navbar">
       <h2>RaahiStay</h2>
@@ -12,7 +15,19 @@ function Navbar() {
         <Link to="/stays">Stays</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/login">Login</Link>
-  
+        <button
+className="theme-btn"
+onClick={()=>
+setDarkMode(!darkMode)
+}
+>
+
+{darkMode ? "☀" : "🌙"}
+
+</button>
+  <Link to="/wishlist">
+  Wishlist
+</Link>
       </div>
     </nav>
   );

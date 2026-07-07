@@ -178,3 +178,7 @@
 .dark-mode p{
   color:white;
 }
+.stat-link{
+    text-decoration: none;
+    color: inherit;
+}

@@ -7,20 +7,79 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
+import { useState, useEffect } from "react";
 <Link to="/dashboard">DASHBOARD</Link>
-function Home() {
+function Home({ darkMode, setDarkMode }) {
+  
+  const [stays, setStays] = useState([]);
+const [search, setSearch] = useState("");
+const [favorites, setFavorites] = useState(() => {
+  const saved = localStorage.getItem("favorites");
+  return saved ? JSON.parse(saved) : [];
+});
+const [loading, setLoading] = useState(true);
+const toggleFavorite = (id) => {
+  let updatedFavorites;
+
+  if (favorites.includes(id)) {
+    updatedFavorites = favorites.filter((fav) => fav !== id);
+  } else {
+    updatedFavorites = [...favorites, id];
+  }
+
+  setFavorites(updatedFavorites);
+
+  localStorage.setItem(
+    "favorites",
+    JSON.stringify(updatedFavorites)
+  );
+};
+useEffect(() => {
+
+  fetch("http://localhost:3001/api/stays")
+    .then((res) => res.json())
+    .then((data) => setStays(data))
+    .catch((err) => console.log(err));
+    setTimeout(() => {
+  setLoading(false);
+}, 1800);
+}, []);
+if (loading) {
   return (
-    
-    <div>
+    <div className="splash-screen">
+
+      <div className="logo-circle">
+  <span className="logo-letter">R</span>
+</div>
+
+     <h2 className="brand-name">
+  RaahiStay
+</h2>
+
+<p>Travel Slower • Stay Longer</p>
+    </div>
+  );
+}
+  return (
+      <div>
+
+
             <nav>
         <h1>RaahiStay</h1>
       
         <div className="nav-links">
+  
          <Link to="/stays">ESCAPES</Link>
 <Link to="/about">ABOUT</Link>
 <Link to="/dashboard">DASHBOARD</Link>
 <Link to="/contact">CONTACT</Link>
 <Link to="/login">LOGIN</Link>
+<button
+    className="theme-btn"
+    onClick={() => setDarkMode(!darkMode)}
+  >
+    {darkMode ? "☀" : "🌙"}
+  </button>
         </div>
       </nav>
       
@@ -38,7 +97,9 @@ function Home() {
             hidden cottages, and unforgettable escapes surrounded by nature.
           </p>
       
-          <button>Find Your Escape</button>
+          <a href="#featured" className="book-link">
+  <button>Find Your Escape</button>
+</a>
         </div>
       
         <div className="hero-image">
@@ -53,34 +114,91 @@ function Home() {
       </p>
             <section id="featured" className="featured">
        <h2>☕︎Featured Escapes ོ☼𓂃</h2>
-      
-        <div className="featured-grid">
-      
-          <div className="stay-card">
-            <h3>🏔️ Himalayan Sunrise Cabin</h3>
-            <p>
-              Wake above the clouds, sip chai on a wooden balcony and watch the
-              mountains glow gold at sunrise.
-            </p>
-          </div>
-      
-          <div className="stay-card">
-            <h3>🌲 Cedar Forest Hideaway</h3>
-            <p>
-              A cozy retreat tucked between pine trees, perfect for reading,
-              journaling and disconnecting from city life.
-            </p>
-          </div>
-      
-          <div className="stay-card">
-            <h3>🌊 Riverstone Cottage</h3>
-            <p>
-              Fall asleep to the sound of flowing water and spend evenings beside
-              warm bonfires under the stars.
-            </p>
-          </div>
-      
-        </div>
+     <div className="search-box">
+
+  <input
+    type="text"
+    placeholder="Search Manali, Shimla..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    
+  />
+
+
+</div>
+    <div className="featured-grid">
+  {stays
+.filter(
+(stay)=>
+
+stay.name.toLowerCase().includes(search.toLowerCase()) ||
+
+stay.location.toLowerCase().includes(search.toLowerCase())
+
+)
+
+.map((stay)=>(
+    <div className="stay-card" key={stay._id}>
+
+      <img
+        className="stay-image"
+        src={
+          stay.image ||
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        }
+        alt={stay.name}
+      />
+
+      <div className="stay-info">
+
+  <div className="stay-top">
+
+    <h3>{stay.name}</h3>
+
+    <div className="top-right">
+
+      <span>⭐ {stay.rating}</span>
+
+      <span
+        className="heart"
+        onClick={() => toggleFavorite(stay._id)}
+      >
+        {favorites.includes(stay._id) ? "❤️" : "🤍"}
+      </span>
+
+    </div>
+
+  </div>
+
+  <p className="location"></p>
+
+        
+        <p className="location">📍 {stay.location}</p>
+
+        <p className="category">{stay.category}</p>
+
+        <p className="description">
+          {stay.description}
+        </p>
+
+        <div className="stay-bottom">
+  <h4>₹{stay.price}/night</h4>
+
+  <Link
+  to={`/stay/${stay._id}`}
+  className="book-link"
+>
+    <button className="book-btn">
+      View Stay
+    </button>
+  </Link>
+</div>
+
+      </div>
+
+    </div>
+  ))}
+</div>
       </section>
       <p className="section-tag">
         MOMENTS
@@ -184,21 +302,4 @@ function Home() {
           </div>
         );
       }
-      <>
-  <Navbar />
-
-  <Hero />
-
-  <Card
-    title="Mountain Cabin"
-    description="A peaceful mountain retreat."
-  />
-
-  <Card
-    title="River Cottage"
-    description="A cozy riverside stay."
-  />
-
-  <Footer />
-</>
       export default Home;

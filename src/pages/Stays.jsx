@@ -1,67 +1,164 @@
-import mountain from "../assets/mountain.jpg";
-import forest from "../assets/forest.jpg";
-import river from "../assets/river.jpg";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-function Stays() {
+function Stays({ darkMode, setDarkMode }) {
+  const [stays, setStays] = useState([]);
+  const [search, setSearch] = useState("");
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/stays")
+      .then((res) => res.json())
+      .then((data) => setStays(data))
+      .catch((err) => console.log(err));
+
+    const saved =
+      JSON.parse(localStorage.getItem("favorites")) || [];
+
+    setFavorites(saved);
+  }, []);
+
+  const toggleFavorite = (id) => {
+    let updated;
+
+    if (favorites.includes(id)) {
+      updated = favorites.filter((fav) => fav !== id);
+    } else {
+      updated = [...favorites, id];
+    }
+
+    setFavorites(updated);
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify(updated)
+    );
+  };
+
   return (
-    <section className="stays-page">
+    <>
+     <Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
-      <p className="section-tag">DISCOVER</p>
+      <section className="stays-page">
 
-      <h1 className="stays-heading">
-        Featured Escapes
-      </h1>
+        <p className="section-tag">
+          DISCOVER
+        </p>
 
-      <div className="stays-grid">
+        <h1 className="stays-heading">
+          Featured Escapes
+        </h1>
 
-        <div className="stay-full-card">
-          <img src={mountain} alt="Mountain Cabin" />
+        <div className="search-box">
 
-          <div className="stay-info">
-            <h3>🏔 Himalayan Sunrise Cabin</h3>
+          <input
+            type="text"
+            placeholder="Search destination..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
 
-            <p>
-              Wake above the clouds, sip chai on a wooden balcony and
-              watch the mountains glow gold at sunrise.
-            </p>
-
-            <button>View Stay</button>
-          </div>
         </div>
 
-        <div className="stay-full-card">
-          <img src={forest} alt="Forest Hideaway" />
+        <div className="featured-grid">
 
-          <div className="stay-info">
-            <h3>🌲 Cedar Forest Hideaway</h3>
+          {stays
+            .filter(
+              (stay) =>
+                stay.name
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                stay.location
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+            )
+            .map((stay) => (
 
-            <p>
-              A cozy retreat tucked between pine trees, perfect for
-              reading, journaling and disconnecting from city life.
-            </p>
+              <div
+                className="stay-card"
+                key={stay._id}
+              >
 
-            <button>View Stay</button>
-          </div>
+                <img
+                  className="stay-image"
+                  src={stay.image}
+                  alt={stay.name}
+                />
+
+                <div className="stay-info">
+
+                  <div className="stay-top">
+
+                    <h3>{stay.name}</h3>
+
+                    <div className="top-right">
+
+                      <span>
+                        ⭐ {stay.rating}
+                      </span>
+
+                      <span
+                        className="heart"
+                        onClick={() =>
+                          toggleFavorite(stay._id)
+                        }
+                      >
+                        {favorites.includes(stay._id)
+                          ? "❤️"
+                          : "🤍"}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <p className="location">
+                    📍 {stay.location}
+                  </p>
+
+                  <p className="category">
+                    {stay.category}
+                  </p>
+
+                  <p className="description">
+                    {stay.description}
+                  </p>
+
+                  <div className="stay-bottom">
+
+                    <h4>
+                      ₹{stay.price}/night
+                    </h4>
+
+                    <Link
+                      to={`/stay/${stay._id}`}
+                      className="book-link"
+                    >
+                      <button className="book-btn">
+                        View Stay
+                      </button>
+                    </Link>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
+
         </div>
 
-        <div className="stay-full-card">
-          <img src={river} alt="River Cottage" />
+      </section>
 
-          <div className="stay-info">
-            <h3>🌊 Riverstone Cottage</h3>
-
-            <p>
-              Fall asleep to flowing water and spend evenings beside
-              warm bonfires under star-filled skies.
-            </p>
-
-            <button>View Stay</button>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
+      <Footer />
+    </>
   );
 }
 
