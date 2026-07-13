@@ -10,7 +10,9 @@ import Wishlist from "./pages/Wishlist";
 import StayDetails from "./pages/StayDetails";
 import Bookings from "./pages/Bookings";
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 function App() {
+  const isLoggedIn = localStorage.getItem("token");
   const [darkMode, setDarkMode] = useState(() => {
   return localStorage.getItem("theme") === "dark";
 });
@@ -74,20 +76,28 @@ useEffect(() => {
 <Route
   path="/dashboard"
   element={
-    <Dashboard
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
-    />
+    isLoggedIn ? (
+      <Dashboard
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+    ) : (
+      <Navigate to="/login" />
+    )
   }
 />
 
 <Route
   path="/wishlist"
   element={
-    <Wishlist
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
-    />
+    isLoggedIn ? (
+      <Wishlist
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+    ) : (
+      <Navigate to="/login" />
+    )
   }
 />
 

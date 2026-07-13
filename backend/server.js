@@ -1,13 +1,23 @@
+const authMiddleware = require("./middleware/authMiddleware");
 const express = require("express");
+const mongoose = require("mongoose");
 const Stay = require("./models/Stay");
 const cors = require("cors");
 require("dotenv").config();
-
+const authRoutes = require("./routes/auth");
 const app = express();
-
+const auth = require("./middleware/auth");
+const rateLimit = require("express-rate-limit");
 app.use(cors());
 app.use(express.json());
-
+const authLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 3,
+  message: {
+    message: "Too many login attempts. Please try again later."
+  }
+});
+app.use("/api/auth", authLimiter, authRoutes);
 // Home Route
 app.get("/api/stays", async (req, res) => {
   try {
@@ -111,18 +121,27 @@ app.get("/api/search", async (req, res) => {
     });
   }
 });
-const PORT = process.env.PORT || 3001;
-
-console.log("Before listen");
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.get("/api/profile", authMiddleware, (req, res) => {
+  res.json({
+    message: "Protected Route Accessed Successfully",
+    user: req.user,
+  });
 });
-
-console.log("After listen");
-const mongoose = require("mongoose");
+app.get("/api/protected", auth, (req, res) => {
+  res.json({
+    message: "Protected Route Accessed Successfully",
+    user: req.user,
+  });
+});
+const PORT = process.env.PORT || 3001;
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
+  .then(() => {
+    console.log("MongoDB Connected ✅");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
   .catch((err) => console.log(err));
