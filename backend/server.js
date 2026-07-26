@@ -1,13 +1,13 @@
 const authMiddleware = require("./middleware/authMiddleware");
 const express = require("express");
 const mongoose = require("mongoose");
-const Stay = require("./models/Stay");
-const cors = require("cors");
+const Stay = require("./models/Stays");const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const app = express();
 const auth = require("./middleware/auth");
 const rateLimit = require("express-rate-limit");
+const aiRoutes = require("./routes/ai");
 app.use(cors());
 app.use(express.json());
 const authLimiter = rateLimit({
@@ -18,6 +18,7 @@ const authLimiter = rateLimit({
   }
 });
 app.use("/api/auth", authLimiter, authRoutes);
+app.use("/api/ai", aiRoutes);
 // Home Route
 app.get("/api/stays", async (req, res) => {
   try {
