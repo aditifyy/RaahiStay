@@ -229,3 +229,10 @@ The project contains one MongoDB collection named **Stay**.
 ## Author
 
 Developed by Aditi as part of the AI-Assisted Full Stack Web Development Internship.
+## Features
+
+- AI Trip Planner
+- Add Stay
+- Update Stay
+- Delete Stay
+- Responsive UI
