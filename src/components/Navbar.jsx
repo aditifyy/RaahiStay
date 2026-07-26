@@ -15,6 +15,8 @@ setDarkMode
         <Link to="/stays">Stays</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/login">Login</Link>
+        <Link to="/ai">AI Planner</Link>
+        <Link to="/add-stay">Add Stay</Link>
         <button
 className="theme-btn"
 onClick={()=>

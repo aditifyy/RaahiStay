@@ -17,13 +17,38 @@ const [booking, setBooking] = useState({
   checkIn: "",
   checkOut: ""
 });
-  useEffect(() => {
-  const saved = JSON.parse(localStorage.getItem("favorites")) || [];
+const [editing, setEditing] = useState(false);
+
+const [editData, setEditData] = useState({
+  name: "",
+  location: "",
+  category: "",
+  description: "",
+  image: "",
+  price: "",
+  rating: "",
+});
+ useEffect(() => {
+  const saved =
+    JSON.parse(localStorage.getItem("favorites")) || [];
+
   setFavorites(saved);
 
   fetch(`http://localhost:3001/api/stays/${id}`)
     .then((res) => res.json())
-    .then((data) => setStay(data))
+    .then((data) => {
+      setStay(data);
+
+      setEditData({
+        name: data.name,
+        location: data.location,
+        category: data.category,
+        description: data.description,
+        image: data.image,
+        price: data.price,
+        rating: data.rating,
+      });
+    })
     .catch((err) => console.log(err));
 }, [id]);
   if (!stay) {
@@ -40,6 +65,31 @@ const toggleFavorite = () => {
 
   setFavorites(updated);
   localStorage.setItem("favorites", JSON.stringify(updated));
+};
+const updateStay = async () => {
+  try {
+    const res = await fetch(
+      `http://localhost:3001/api/stays/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editData),
+      }
+    );
+
+    const data = await res.json();
+
+    setStay(data);
+
+    alert("Stay Updated Successfully!");
+
+    setEditing(false);
+  } catch (err) {
+    console.log(err);
+    alert("Update Failed");
+  }
 };
   return (
     <>
@@ -67,7 +117,92 @@ const toggleFavorite = () => {
           <h2>₹{stay.price}/night</h2>
 
           <p>{stay.description}</p>
+<button
+  className="book-btn"
+  onClick={() => setEditing(!editing)}
+  style={{ marginRight: "10px" }}
+>
+  {editing ? "Cancel" : "Edit Stay"}
+</button>
 
+{editing && (
+  <div className="booking-form">
+
+    <input
+      type="text"
+      placeholder="Name"
+      value={editData.name}
+      onChange={(e) =>
+        setEditData({ ...editData, name: e.target.value })
+      }
+    />
+
+    <input
+      type="text"
+      placeholder="Location"
+      value={editData.location}
+      onChange={(e) =>
+        setEditData({ ...editData, location: e.target.value })
+      }
+    />
+
+    <input
+      type="text"
+      placeholder="Category"
+      value={editData.category}
+      onChange={(e) =>
+        setEditData({ ...editData, category: e.target.value })
+      }
+    />
+
+    <input
+      type="text"
+      placeholder="Image URL"
+      value={editData.image}
+      onChange={(e) =>
+        setEditData({ ...editData, image: e.target.value })
+      }
+    />
+
+    <input
+      type="number"
+      placeholder="Price"
+      value={editData.price}
+      onChange={(e) =>
+        setEditData({ ...editData, price: e.target.value })
+      }
+    />
+
+    <input
+      type="number"
+      step="0.1"
+      placeholder="Rating"
+      value={editData.rating}
+      onChange={(e) =>
+        setEditData({ ...editData, rating: e.target.value })
+      }
+    />
+
+    <textarea
+      placeholder="Description"
+      value={editData.description}
+      onChange={(e) =>
+        setEditData({
+          ...editData,
+          description: e.target.value,
+        })
+      }
+    />
+
+    <button
+      className="book-btn"
+      onClick={updateStay}
+    >
+      Save Changes
+    </button>
+
+  </div>
+)}
         <button
   className="book-btn"
   onClick={() => setShowForm(true)}

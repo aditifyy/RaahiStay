@@ -11,6 +11,8 @@ import StayDetails from "./pages/StayDetails";
 import Bookings from "./pages/Bookings";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import AIPlanner from "./pages/AIPlanner";
+import AddStay from "./pages/AddStay";
 function App() {
   const isLoggedIn = localStorage.getItem("token");
   const [darkMode, setDarkMode] = useState(() => {
@@ -87,19 +89,6 @@ useEffect(() => {
   }
 />
 
-<Route
-  path="/wishlist"
-  element={
-    isLoggedIn ? (
-      <Wishlist
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-      />
-    ) : (
-      <Navigate to="/login" />
-    )
-  }
-/>
 
 <Route
   path="/bookings"
@@ -120,7 +109,15 @@ useEffect(() => {
     />
   }
 />
-
+<Route
+  path="/wishlist"
+  element={
+    <Wishlist
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+    />
+  }
+/>
 <Route
   path="/login"
   element={
@@ -130,7 +127,24 @@ useEffect(() => {
     />
   }
 />
-
+<Route
+  path="/ai"
+  element={
+    <AIPlanner
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+    />
+  }
+/>
+<Route
+  path="/add-stay"
+  element={
+    <AddStay
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+    />
+  }
+/>
 </Routes>
 
 </div>

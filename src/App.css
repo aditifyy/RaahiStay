@@ -1288,3 +1288,17 @@ body.dark input {
   color: white;
   border: 1px solid #555;
 }
+.delete-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#c86b4b;
+  color:white;
+  cursor:pointer;
+}
+
+.delete-btn:hover{
+  opacity:.9;
+}

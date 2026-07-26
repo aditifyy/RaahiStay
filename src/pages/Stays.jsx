@@ -35,7 +35,17 @@ function Stays({ darkMode, setDarkMode }) {
       JSON.stringify(updated)
     );
   };
+const deleteStay = async (id) => {
+  try {
+    await fetch(`http://localhost:3001/api/stays/${id}`, {
+      method: "DELETE",
+    });
 
+    setStays(stays.filter((stay) => stay._id !== id));
+  } catch (err) {
+    console.log(err);
+  }
+};
   return (
     <>
      <Navbar
@@ -109,6 +119,7 @@ function Stays({ darkMode, setDarkMode }) {
                           toggleFavorite(stay._id)
                         }
                       >
+                        
                         {favorites.includes(stay._id)
                           ? "❤️"
                           : "🤍"}
@@ -144,9 +155,13 @@ function Stays({ darkMode, setDarkMode }) {
                         View Stay
                       </button>
                     </Link>
-
                   </div>
-
+<button
+  className="delete-btn"
+  onClick={() => deleteStay(stay._id)}
+>
+  Delete
+</button>
                 </div>
 
               </div>
