@@ -25,9 +25,7 @@ nav{
 nav h1{
   font-family:'Cormorant Garamond',serif;
   font-size:5rem;
-  color:nav h1{
   color:#7E8F6B;
-};
   letter-spacing:-2px;
 }
 
@@ -37,37 +35,38 @@ nav p {
   text-transform: uppercase;
   color: #8c7770;
 }
+.hero-content{
+  flex:1;
+  max-width:520px;
+}
+
+.hero-content .section-tag{
+  text-align:left;
+}
+
+
+
 
 .hero{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:60px;
-
-  padding:40px 10% 100px;
-  .hero{
-  position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:60px;
+    width:90%;
+    margin:60px auto;
+    position:relative;
 }
-
 .hero::before{
   content:"";
-
   position:absolute;
-
   width:420px;
   height:420px;
-
   background:#DDE4CF;
-
   border-radius:50%;
-
   left:-100px;
   top:120px;
-
   opacity:.45;
-
   z-index:-1;
-}
 }
 
 .featured-grid{
@@ -101,24 +100,45 @@ nav p {
   line-height:1.8;
 }
 
-.hero-image img{
-  width:100%;
-  height:650px;
-  object-fit:cover;
 
-  border-radius:35px;
+.hero-content .section-tag{
+    text-align:left;
+    margin-bottom:18px;
 }
+
+.hero-content h2{
+    font-size:5.2rem;
+    line-height:1.05;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:1.05rem;
+    line-height:1.8;
+    color:#5E5954;
+    margin-bottom:30px;
+}
+.hero-image{
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
 .hero-image img{
-  border-radius:280px 280px 35px 35px;
+  width:420px;
+  height:520px;
+  object-fit:cover;
+  border-radius:220px 220px 30px 30px;
   border:8px solid #F7F4EC;
 }
 
 
 .hero h2{
-  font-family:'Tangerine', cursive;
-  font: size 3.5rem;
-  line-height:1;
-  color:#2F4A3D;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  line-height: 1.1;
+  color: #2F4A3D;
 }
 
 .hero p{
@@ -419,16 +439,13 @@ h2::after{
 }
 .section-tag{
   letter-spacing:6px;
-  font-size:0.8rem;
+  font-size:.8rem;
   color:#B36A4C;
-  margin-bottom:15px;
+  margin:0;
+  padding:15px 0;
   text-transform:uppercase;
   text-align:center;
   font-weight:600;
-  .section-tag{
-  margin: 0;
-  padding: 15px 0;
-}
 }
 .featured h2,
 .gallery h2,
@@ -450,12 +467,6 @@ nav h1{
   font-family:'Allura', cursive;
 }
 
-.hero h2{
-  font-family:'Great Vibes', cursive !important;
-  font-weight:400 !important;
-  font-size:5.5rem !important;
-  line-height:1.1;
-}
 
 .featured h2,
 .gallery h2,

@@ -8,7 +8,7 @@ import Hero from "../components/Hero";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
-<Link to="/dashboard">DASHBOARD</Link>
+
 function Home({ darkMode, setDarkMode }) {
   
   const [stays, setStays] = useState([]);
@@ -36,7 +36,7 @@ const toggleFavorite = (id) => {
 };
 useEffect(() => {
 
-  fetch("http://localhost:3001/api/stays")
+  fetch("https://raahistay.onrender.com/api/stays")
     .then((res) => res.json())
     .then((data) => setStays(data))
     .catch((err) => console.log(err));
@@ -113,6 +113,7 @@ if (loading) {
         DISCOVER
       </p>
             <section id="featured" className="featured">
+
        <h2>☕︎Featured Escapes ོ☼𓂃</h2>
      <div className="search-box">
 
