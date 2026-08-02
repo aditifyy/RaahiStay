@@ -9,7 +9,7 @@ function Stays({ darkMode, setDarkMode }) {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/stays")
+    fetch("https://raahistay.onrender.com/api/stays")
       .then((res) => res.json())
       .then((data) => setStays(data))
       .catch((err) => console.log(err));
@@ -37,7 +37,7 @@ function Stays({ darkMode, setDarkMode }) {
   };
 const deleteStay = async (id) => {
   try {
-    await fetch(`http://localhost:3001/api/stays/${id}`, {
+    await fetch(`https://raahistay.onrender.com/api/stays/${id}`, {
       method: "DELETE",
     });
 

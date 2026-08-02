@@ -15,7 +15,7 @@ setDarkMode
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
 
-    fetch("http://localhost:3001/api/stays")
+    fetch("https://raahistay.onrender.com/api/stays")
       .then((res) => res.json())
       .then((data) => setStays(data))
       .catch((err) => console.log(err));

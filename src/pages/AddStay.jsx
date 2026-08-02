@@ -27,7 +27,7 @@ function AddStay({ darkMode, setDarkMode }) {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3001/api/stays", {
+      const res = await fetch("https://raahistay.onrender.com/api/stays", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

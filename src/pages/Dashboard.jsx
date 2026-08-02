@@ -19,7 +19,7 @@ const savedBookings =
   JSON.parse(localStorage.getItem("bookings")) || [];
 
 setBookings(savedBookings);
-  fetch("http://localhost:3001/api/stays")
+  fetch("https://raahistay.onrender.com/api/stays")
     .then((res) => res.json())
     .then((data) => setStays(data))
     .catch((err) => console.log(err));

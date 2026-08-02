@@ -34,7 +34,7 @@ const [editData, setEditData] = useState({
 
   setFavorites(saved);
 
-  fetch(`http://localhost:3001/api/stays/${id}`)
+  fetch(`https://raahistay.onrender.com/api/stays/${id}`)
     .then((res) => res.json())
     .then((data) => {
       setStay(data);
@@ -69,7 +69,7 @@ const toggleFavorite = () => {
 const updateStay = async () => {
   try {
     const res = await fetch(
-      `http://localhost:3001/api/stays/${id}`,
+      `https://raahistay.onrender.com/api/stays/${id}`,
       {
         method: "PUT",
         headers: {
