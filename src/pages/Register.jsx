@@ -1,24 +1,26 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function Login({ darkMode, setDarkMode }) {
+function Register({ darkMode, setDarkMode }) {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       const res = await fetch(
-        "https://raahistay.onrender.com/api/auth/login",
+        "https://raahistay.onrender.com/api/auth/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            name,
             email,
             password,
           }),
@@ -27,18 +29,15 @@ function Login({ darkMode, setDarkMode }) {
 
       const data = await res.json();
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-
-        alert("Login Successful ✅");
-
-        navigate("/dashboard");
+      if (res.ok) {
+        alert("Registration Successful 🎉");
+        navigate("/login");
       } else {
         alert(data.message);
       }
     } catch (err) {
-      alert("Something went wrong");
       console.log(err);
+      alert("Something went wrong");
     }
   };
 
@@ -51,45 +50,34 @@ function Login({ darkMode, setDarkMode }) {
 
       <section className="login-page">
         <div className="login-card">
-          <p className="section-tag">WELCOME BACK</p>
+          <p className="section-tag">JOIN RAAHISTAY</p>
 
-          <h1>Sign In</h1>
+          <h1>Create Account</h1>
+
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
           <input
             type="email"
             placeholder="Email Address"
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button onClick={handleLogin}>
-            Login
+          <button onClick={handleRegister}>
+            Register
           </button>
-
-         <p className="login-text">
-  New here?{" "}
-  <span
-    onClick={() => navigate("/register")}
-    style={{
-      color: "#1b5e20",
-      cursor: "pointer",
-      fontWeight: "600",
-    }}
-  >
-    Create an account
-  </span>
-</p>
         </div>
       </section>
 
@@ -98,4 +86,4 @@ function Login({ darkMode, setDarkMode }) {
   );
 }
 
-export default Login;
+export default Register;

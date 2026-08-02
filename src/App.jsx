@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import AIPlanner from "./pages/AIPlanner";
 import AddStay from "./pages/AddStay";
+import Register from "./pages/Register";
 function App() {
   const isLoggedIn = localStorage.getItem("token");
   const [darkMode, setDarkMode] = useState(() => {
@@ -122,6 +123,15 @@ useEffect(() => {
   path="/login"
   element={
     <Login
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+    />
+  }
+/>
+<Route
+  path="/register"
+  element={
+    <Register
       darkMode={darkMode}
       setDarkMode={setDarkMode}
     />
