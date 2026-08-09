@@ -106,12 +106,8 @@ Create a `.env` file inside the **backend** folder.
 PORT=3001
 
 MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret_key
-
+JWT_SECRET=your_jwt_secret
 GEMINI_API_KEY=your_gemini_api_key
-```
-
 ---
 
 ## 🌐 Live Links
