@@ -134,18 +134,22 @@ https://github.com/aditifyy/RaahiStay
 
 ### Home Page
 
+<img width="1146" height="743" alt="image" src="https://github.com/user-attachments/assets/e1508192-7cf2-42ea-8b53-a364f46da771" />
 
 
 ### Stays Page
 
+<img width="1146" height="743" alt="image" src="https://github.com/user-attachments/assets/bda9c95e-0f95-461b-bd85-1613c5e2f675" />
 
 
 ### Dashboard
+<img width="1146" height="743" alt="image" src="https://github.com/user-attachments/assets/4cc762d9-9551-43d0-9b8d-8e60b93bcc8c" />
 
 
 
 ### AI Trip Planner
 
+<img width="1146" height="743" alt="image" src="https://github.com/user-attachments/assets/0dab760c-fe7f-4463-9774-7f6b76f14ce9" />
 
 
 ---
