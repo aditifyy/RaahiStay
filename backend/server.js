@@ -5,6 +5,7 @@ const Stay = require("./models/Stays");const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const app = express();
+app.set("trust proxy", 1);
 const auth = require("./middleware/auth");
 const rateLimit = require("express-rate-limit");
 const aiRoutes = require("./routes/ai");
