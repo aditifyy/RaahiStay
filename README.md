@@ -1,238 +1,228 @@
-# RaahiStay Backend API
+# 🌿 RaahiStay
 
-A simple REST API built using Node.js and Express.js for the RaahiStay project.
+RaahiStay is a full-stack AI-powered eco-stay booking platform that helps users discover beautiful cottages, cabins, forest stays, and nature retreats. It combines stay booking with an AI travel planner to provide a complete travel planning experience.
 
-## Features
+---
 
-- Get all stays
-- Get a single stay by ID
-- Add a new stay
-- Update an existing stay
-- Delete a stay
-- Search stays by location
+## ✨ Features
+
+- User Registration & Login (JWT Authentication)
+- Browse Eco-Friendly Stays
+- Search Stays by Name or Location
+- View Stay Details
+- Add New Stay
+- Update Stay
+- Delete Stay
+- Wishlist (Favorites)
+- AI Trip Planner using Google Gemini API
+- Responsive User Interface
+- Dark / Light Mode
 - MongoDB Atlas Integration
-- Mongoose ODM
-- CRUD Operations
-- Search by Location
-- Environment Variable Support
-- Proper HTTP Status Codes
-- MongoDB Atlas
-- Mongoose
+- REST API Backend
 
-## Tech Stack
- - Node.js
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- React.js
+- Vite
+- CSS3
+- React Router DOM
+
+### Backend
+- Node.js
 - Express.js
+
+### Database
 - MongoDB Atlas
 - Mongoose
-- CORS
-- Dotenv
-- Nodemon
 
-## Installation
+### AI
+- Google Gemini API
 
-### 1. Clone the repository
+### Deployment
+- Vercel
+- Render
 
-```bash
-git clone <repository-url>
+---
+
+## 📂 Project Structure
+
+```text
+RaahiStay
+│
+├── backend
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── server.js
+│   └── package.json
+│
+├── src
+│   ├── assets
+│   ├── components
+│   ├── pages
+│   ├── App.jsx
+│   ├── App.css
+│   └── main.jsx
+│
+├── package.json
+└── README.md
 ```
 
-### 2. Go to backend folder
+---
+
+## 🚀 Installation
+
+### Clone Repository
 
 ```bash
-cd backend
+git clone https://github.com/aditifyy/RaahiStay.git
 ```
 
-### 3. Install dependencies
+### Install Frontend
 
 ```bash
 npm install
-```
-
-### 4. Create a .env file
-
-```env
-PORT=3001
-```
-
-### 5. Start the server
-
-```bash
 npm run dev
 ```
 
-Server will run at:
+### Install Backend
 
-```
-https://raahistay.onrender.com
+```bash
+cd backend
+npm install
+npm start
 ```
 
 ---
-## Set Up the Database
 
-1. Create a `.env` file inside the backend folder.
+## 🔑 Environment Variables
 
-2. Add the following environment variables:
+Create a `.env` file inside the **backend** folder.
 
 ```env
 PORT=3001
+
 MONGO_URI=your_mongodb_connection_string
-```
 
-3. Replace `your_mongodb_connection_string` with your MongoDB Atlas connection string.
+JWT_SECRET=your_secret_key
 
-4. Start the server:
-
-```bash
-npm run dev
-```
-
-If the connection is successful, the terminal will display:
-
-```
-MongoDB Connected ✅
-```
-# API Endpoints
-
-## Get All Stays
-
-```
-GET /api/stays
-```
-
-Response: **200 OK**
-
----
-
-## Get Stay by ID
-
-```
-GET /api/stays/:id
-```
-
-Example:
-
-```
-GET /api/stays/1
-```
-
-Response: **200 OK**
-
-If ID is not found:
-
-```
-404 Not Found
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 ---
 
-## Add New Stay
+## 🌐 Live Links
 
-```
-POST /api/stays
-```
+### Frontend
 
-Example Body:
+raahi-stay.vercel.app
 
-```json
-{
-  "name": "Lake View Villa",
-  "location": "Nainital",
-  "price": 4500
-}
-```
+### Backend
 
-Response:
+https://raahistay.onrender.com
 
-```
-201 Created
-```
+### GitHub Repository
+
+https://github.com/aditifyy/RaahiStay
 
 ---
 
-## Update Stay
+## 📸 Screenshots
 
-```
-PUT /api/stays/:id
-```
+### Home Page
 
-Example Body:
 
-```json
-{
-  "price": 3500
-}
-```
 
-Response:
+### Stays Page
 
-```
-200 OK
-```
+
+
+### Dashboard
+
+
+
+### AI Trip Planner
+
+
 
 ---
 
-## Delete Stay
+## 🤖 AI Feature
 
-```
-DELETE /api/stays/:id
-```
-
-Example:
-
-```
-DELETE /api/stays/2
-```
-
-Response:
-
-```
-200 OK
-```
+RaahiStay integrates **Google Gemini API** to generate personalized travel itineraries based on the user's destination and travel preferences. The AI planner helps users organize their trips with customized suggestions.
 
 ---
 
-## Search Stay by Location
+## 📡 API Endpoints
 
-```
-GET /api/search?location=manali
-```
-
-Response:
-
-```
-200 OK
-```
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/api/stays` | Get all stays |
+| GET | `/api/stays/:id` | Get stay by ID |
+| POST | `/api/stays` | Add new stay |
+| PUT | `/api/stays/:id` | Update stay |
+| DELETE | `/api/stays/:id` | Delete stay |
+| GET | `/api/search?location=` | Search stays by location |
+| POST | `/api/auth/register` | Register user |
+| POST | `/api/auth/login` | Login user |
+| POST | `/api/ai` | Generate AI travel plan |
 
 ---
 
-## HTTP Status Codes Used
+## 🗄 Database
 
-| Status Code | Meaning |
-|-------------|---------|
+This project uses **MongoDB Atlas** as the cloud database.
+
+Collections:
+
+### Users
+
+- Name
+- Email
+- Password
+
+### Stays
+
+- Name
+- Location
+- Image
+- Price
+- Rating
+- Category
+- Description
+
+MongoDB Atlas and Mongoose are used for storing and managing application data.
+
+---
+
+## 📌 HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
 | 200 | OK |
 | 201 | Created |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 | 404 | Not Found |
+| 500 | Internal Server Error |
 
 ---
-## Database
 
-This project uses MongoDB Atlas as the cloud database.
+## 👩‍💻 Author
 
-Mongoose is used as the ODM (Object Data Modeling) library.
+**Aditi**
 
-All homestay data is stored in MongoDB.
-## Schema Diagram
+B.Tech Computer Science Engineering
 
-The project contains one MongoDB collection named **Stay**.
+Graphic Era University
 
-![Schema Diagram](schema-diagram.png)
-## Author
+Developed as part of the **AI-Assisted Full Stack Web Development Internship**.
 
-Developed by Aditi as part of the AI-Assisted Full Stack Web Development Internship.
-## Features
+---
 
-- AI Trip Planner
-- Add Stay
-- Update Stay
-- Delete Stay
-- Responsive UI
+## 📜 License
+
+This project is created for educational purposes as part of the internship program.
